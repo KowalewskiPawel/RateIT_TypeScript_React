@@ -5,6 +5,8 @@ import { useState } from "react";
 
 import AuthService from "../services/auth.service.js";
 
+import "../styles/Login.scss";
+
 function Login() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,29 +29,47 @@ function Login() {
   return (
     <div className="loginForm">
       <Logo />
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          id="user"
-          type="text"
-          placeholder="Email"
-          value={mail}
-          onChange={(e) => setMail(e.target.value)}
-          required
-        />
-        <input
-          id="pass"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <input id="submitBtn" type="submit" value="Submit" />
-      </form>
-      <p>or</p>
+      <div className="container">
+        <h1>LOG IN</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            className="inputLogin"
+            id="mail"
+            type="text"
+            placeholder="Email"
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
+            required
+          />
+          <input
+            className="inputLogin"
+            id="pass"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <input
+            className="formButton"
+            id="submitBtn"
+            type="submit"
+            value="SUBMIT"
+          />
+        </form>
+        <h2>or</h2>
+        <button className="formButton" id="createAccountBtn">
+          CREATE NEW ACCOUNT
+        </button>
+        <button className="formButton" id="activateAccountBtn">
+          ACTIVATE ACCOUNT
+        </button>
+        <button className="formButton" id="resetPasswordBtn">
+          RESET PASSWORD
+        </button>
 
-      {message ? <p>{message}</p> : ""}
+        {message ? <p>{message}</p> : ""}
+      </div>
     </div>
   );
 }
