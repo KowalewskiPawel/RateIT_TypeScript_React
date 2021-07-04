@@ -1,0 +1,28 @@
+$font-racing: "Racing Sans One", cursive;
+
+.logo {
+  width: 80vw;
+  height: 20vh;
+  display: flex;
+  margin: auto;
+}
+
+#text {
+  align-self: center;
+}
+
+img {
+  transform: scale(80%);
+}
+
+p {
+  font-family: $font-racing;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.2em;
+
+  color: #ffffff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
