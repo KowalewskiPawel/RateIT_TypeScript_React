@@ -5,17 +5,19 @@ import { useState } from "react";
 
 import AuthService from "../services/auth.service.js";
 
-import "../styles/Login.scss";
+import "../styles/Signup.scss";
 
-function Login() {
+function Signup() {
+  const [username, setUsername] = useState("");
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
-    AuthService.login(mail, password).then(
+    /*
+    AuthService.signup(mail, password).then(
       (response: any) => {
         window.location.reload();
       },
@@ -24,14 +26,24 @@ function Login() {
         setMessage("Wrong credentials or network problems.");
       }
     );
+    */
   };
 
   return (
-    <div className="loginForm">
+    <div className="signupForm">
       <Logo />
       <div className="container">
-        <h1>LOG IN</h1>
+        <h1>SIGN UP</h1>
         <form onSubmit={handleSubmit}>
+          <input
+            className="inputLogin"
+            id="username"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
           <input
             className="inputLogin"
             id="mail"
@@ -51,22 +63,21 @@ function Login() {
             required
           />
           <input
+            className="inputLogin"
+            id="confirmPass"
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          <input
             className="formButton"
             id="submitBtn"
             type="submit"
             value="SUBMIT"
           />
         </form>
-        <h2>OR</h2>
-        <button className="formButton" id="createAccountBtn">
-          CREATE NEW ACCOUNT
-        </button>
-        <button className="formButton" id="activateAccountBtn">
-          ACTIVATE ACCOUNT
-        </button>
-        <button className="formButton" id="resetPasswordBtn">
-          RESET PASSWORD
-        </button>
 
         {message ? <p>{message}</p> : ""}
       </div>
@@ -74,4 +85,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
