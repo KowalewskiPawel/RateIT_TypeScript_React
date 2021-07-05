@@ -5,13 +5,8 @@ import { useState } from "react";
 
 import AuthService from "../services/auth.service.js";
 
-import "../styles/Signup.scss";
-
-function Signup() {
-  const [username, setUsername] = useState("");
+function ResetPassword() {
   const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = (event: any) => {
@@ -30,23 +25,14 @@ function Signup() {
   };
 
   return (
-    <div className="signupForm">
+    <div className="activateForm">
       <Logo />
       <div className="container">
         <Link className="goBack" to="/login">
           ←
         </Link>
-        <h1>SIGN UP</h1>
+        <h1>FORGOT PASSWORD</h1>
         <form onSubmit={handleSubmit}>
-          <input
-            className="inputLogin"
-            id="username"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
           <input
             className="inputLogin"
             id="mail"
@@ -54,24 +40,6 @@ function Signup() {
             placeholder="Email"
             value={mail}
             onChange={(e) => setMail(e.target.value)}
-            required
-          />
-          <input
-            className="inputLogin"
-            id="pass"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <input
-            className="inputLogin"
-            id="confirmPass"
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
           <input
@@ -88,4 +56,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default ResetPassword;

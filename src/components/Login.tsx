@@ -58,15 +58,21 @@ function Login() {
           />
         </form>
         <h2>OR</h2>
-        <button className="formButton" id="createAccountBtn">
-          CREATE NEW ACCOUNT
-        </button>
-        <button className="formButton" id="activateAccountBtn">
-          ACTIVATE ACCOUNT
-        </button>
-        <button className="formButton" id="resetPasswordBtn">
-          RESET PASSWORD
-        </button>
+        <Link to="/signup">
+          <button className="formButton" id="createAccountBtn">
+            CREATE NEW ACCOUNT
+          </button>
+        </Link>
+        <Link to="/activate">
+          <button className="formButton" id="activateAccountBtn">
+            ACTIVATE ACCOUNT
+          </button>
+        </Link>
+        <Link to="/reset">
+          <button className="formButton" id="resetPasswordBtn">
+            RESET PASSWORD
+          </button>
+        </Link>
 
         {message ? <p>{message}</p> : ""}
       </div>
