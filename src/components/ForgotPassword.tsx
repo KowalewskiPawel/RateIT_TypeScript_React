@@ -5,20 +5,20 @@ import { useState } from "react";
 
 import AuthService from "../services/auth.service.js";
 
-function Activate() {
+function ForgotPassword() {
   const [mail, setMail] = useState("");
-  const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    AuthService.activate(mail, code).then(
+
+    AuthService.forgot(mail).then(
       (response: any) => {
         return setMessage(response.message);
       },
       (err: any) => {
         console.error(err);
-        return setMessage("Wrong credentials or network problems.");
+        setMessage("Wrong credentials or network problems.");
       }
     );
   };
@@ -30,7 +30,7 @@ function Activate() {
         <Link className="goBack" to="/login">
           ←
         </Link>
-        <h1>ACTIVATE ACCOUNT</h1>
+        <h1>FORGOT PASSWORD</h1>
         <form onSubmit={handleSubmit}>
           <input
             className="inputLogin"
@@ -42,21 +42,18 @@ function Activate() {
             required
           />
           <input
-            className="inputLogin"
-            id="code"
-            type="text"
-            placeholder="Code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            required
-          />
-          <input
             className="formButton"
             id="submitBtn"
             type="submit"
             value="SUBMIT"
           />
         </form>
+        <h2>AND</h2>
+        <Link to="/reset">
+          <button className="formButton" id="resetPasswordBtn">
+            RESET PASSWORD
+          </button>
+        </Link>
 
         {message ? <p className="warningMessage">{message}</p> : ""}
       </div>
@@ -64,4 +61,4 @@ function Activate() {
   );
 }
 
-export default Activate;
+export default ForgotPassword;

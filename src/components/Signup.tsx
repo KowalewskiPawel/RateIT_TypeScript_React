@@ -16,17 +16,21 @@ function Signup() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    /*
-    AuthService.signup(mail, password).then(
+
+    if (password !== confirmPassword) {
+      setMessage("Passwords don't match.");
+      return;
+    }
+
+    AuthService.signup(username, mail, password, confirmPassword).then(
       (response: any) => {
-        window.location.reload();
+        return setMessage(response.message);
       },
       (err: any) => {
         console.error(err);
-        setMessage("Wrong credentials or network problems.");
+        return setMessage("Wrong credentials or network problems.");
       }
     );
-    */
   };
 
   return (
@@ -82,7 +86,7 @@ function Signup() {
           />
         </form>
 
-        {message ? <p>{message}</p> : ""}
+        {message ? <p className="warningMessage">{message}</p> : ""}
       </div>
     </div>
   );

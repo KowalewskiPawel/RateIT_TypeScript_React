@@ -36,7 +36,7 @@ function Login() {
             className="inputLogin"
             id="mail"
             type="text"
-            placeholder="Email"
+            placeholder="Username or Email"
             value={mail}
             onChange={(e) => setMail(e.target.value)}
             required
@@ -68,13 +68,13 @@ function Login() {
             ACTIVATE ACCOUNT
           </button>
         </Link>
-        <Link to="/reset">
+        <Link to="/forgot">
           <button className="formButton" id="resetPasswordBtn">
-            RESET PASSWORD
+            FORGOT PASSWORD
           </button>
         </Link>
 
-        {message ? <p>{message}</p> : ""}
+        {message ? <p className="warningMessage">{message}</p> : ""}
       </div>
     </div>
   );

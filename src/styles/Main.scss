@@ -1,0 +1,77 @@
+@import "base";
+
+.main-container {
+  height: 90vh;
+  width: 90vw;
+  margin: 2rem auto auto auto;
+  background-color: $dark-grey;
+  text-align: center;
+  border: solid 1px black;
+  border-radius: 10px;
+}
+
+.logo-small {
+  display: inline-block;
+  transform: scale(0.4);
+  width: auto;
+  height: auto;
+  margin: -4rem 11rem auto -4rem;
+}
+
+#small-title {
+  font-size: 2rem;
+  margin: -9rem -1rem auto auto;
+}
+
+.car-bike-img {
+  transform: scale(0.8);
+  display: inline-block;
+}
+
+.vehicles-selection {
+  margin: 1rem 10rem auto auto;
+}
+
+#logout-button {
+  position: relative;
+  top: -7vh;
+  width: auto;
+  height: auto;
+  font-family: $font-racing;
+  letter-spacing: 0.2em;
+  text-decoration-line: underline;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: none;
+  border: none;
+
+  color: $white;
+
+  margin: -5vh -65vw auto auto;
+}
+
+#username {
+  width: auto;
+  height: auto;
+  margin: -5vh -68vw auto auto;
+  word-wrap: break-word;
+}
+
+.search-bar {
+  width: 35vw;
+  height: 2rem;
+  margin: -3rem 1rem auto auto;
+  display: block;
+  background: $white;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+}
+
+.sortList {
+  margin: 2vw -50vw auto auto;
+  background: $grey;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 10px;
+  color: $white;
+}
