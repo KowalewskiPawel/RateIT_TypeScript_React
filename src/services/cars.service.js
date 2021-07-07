@@ -7,6 +7,14 @@ class CarsService {
   getCars() {
     return axios.get(API_URL + "/cars");
   }
+
+  getModels(make) {
+    return axios.get(`${API_URL}/cars/${make}/all`);
+  }
+
+  getReviews(make, model) {
+    return axios.get(`${API_URL}/cars/${make}/${model}`);
+  }
 }
 
 export default new CarsService();

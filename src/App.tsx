@@ -10,6 +10,9 @@ import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
 import Main from "./components/Main";
+import CarMake from "./components/CarMake";
+import CarReviews from "./components/CarReviews";
+import CarReview from "./components/CarReview";
 
 import "./App.scss";
 
@@ -48,7 +51,20 @@ function App() {
           </Route>
         </Switch>
       ) : (
-        <Main />
+        <Switch>
+          <Route exact path={["/", "/main"]}>
+            <Main />
+          </Route>
+          <Route exact path="/cars/:make/all">
+            <CarMake />
+          </Route>
+          <Route exact path="/cars/:make/:model">
+            <CarReviews />
+          </Route>
+          <Route exact path="/cars/:make/:model/:id">
+            <CarReview />
+          </Route>
+        </Switch>
       )}
     </Router>
   );
