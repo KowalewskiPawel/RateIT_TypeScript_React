@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
+import bikesService from "../services/bikes.service";
 
 import logo from "../assets/logo.png";
 import car from "../assets/car.png";
@@ -10,11 +11,44 @@ import bike from "../assets/bike.png";
 import "../styles/Main.scss";
 import { useEffect } from "react";
 
+interface Review {
+  Version: string;
+  Year: number;
+  Engine: string;
+  General: string;
+  Pros: string;
+  Cons: string;
+  User: string;
+  Date: Date;
+}
+
+interface Model {
+  name: string;
+  reviews: Review[];
+}
+
+interface Car {
+  carId: string;
+  make: string;
+  models: Model[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Bike {
+  bikeId: string;
+  make: string;
+  models: Model[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 function Main() {
   const [username, setUsername] = useState("");
   const [selectCars, setSelectCars] = useState(true);
   const [selectBikes, setSelectBikes] = useState(true);
-  const [vehiclesList, setVehiclesList] = useState([]);
+  const [carsList, setCarsList] = useState<Car[]>([]);
+  const [bikesList, setBikesList] = useState<Bike[]>([]);
 
   const logout = () => {
     authService.logout();
@@ -45,8 +79,14 @@ function Main() {
     carsService
       .getCars()
       .then((response) => {
-        console.log(response.data);
-        return setVehiclesList(response.data);
+        return setCarsList([...response.data]);
+      })
+      .catch((err) => console.error(err));
+
+    bikesService
+      .getBikes()
+      .then((response) => {
+        return setBikesList([...response.data]);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -107,13 +147,36 @@ function Main() {
         <option value="reviewsAsc">All Reviews ▲</option>
       </select>
       <div className="makes-list">
-        {vehiclesList.map((vehicle, index) => {
-          const { make } = vehicle;
-          const { models } = vehicle;
+        {carsList.map((vehicle, index) => {
+          let reviewsLength = 0;
+          vehicle.models.forEach((model) => {
+            reviewsLength += model.reviews.length;
+          });
           return (
-            <div key={index}>
-              <p>{make}</p>
-              <p>Models:</p>
+            <div key={index} className="car-make-bar">
+              <img src={car} alt="car-mini-logo" />
+              <span>
+                <b>{vehicle.make}</b>
+              </span>
+              <span>Models: {vehicle.models.length}</span>
+              <span>Reviews: {reviewsLength}</span>
+            </div>
+          );
+        })}
+
+{bikesList.map((vehicle, index) => {
+          let reviewsLength = 0;
+          vehicle.models.forEach((model) => {
+            reviewsLength += model.reviews.length;
+          });
+          return (
+            <div key={index} className="bike-make-bar">
+              <img src={bike} alt="bike-mini-logo" />
+              <span>
+                <b>{vehicle.make}</b>
+              </span>
+              <span>Models: {vehicle.models.length}</span>
+              <span>Reviews: {reviewsLength}</span>
             </div>
           );
         })}
