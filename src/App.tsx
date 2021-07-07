@@ -64,6 +64,9 @@ function App() {
           <Route exact path="/cars/:make/:model/:id">
             <CarReview />
           </Route>
+          <Route path="/">
+            <NotFound />
+          </Route>
         </Switch>
       )}
     </Router>

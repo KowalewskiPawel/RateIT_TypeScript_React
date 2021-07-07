@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
@@ -74,10 +75,14 @@ function CarMake() {
         <option value="reviewsDes">All Reviews ▼</option>
         <option value="reviewsAsc">All Reviews ▲</option>
       </select>
+      <Link className="goBack" to="/">
+        ←
+      </Link>
       <div className="makes-list">
         {modelsList.map((vehicle, index) => {
           return (
             <div key={index} className="car-make-bar">
+              <Link to={`/cars/${make}/${vehicle.name}`}>View</Link>
               <img src={car} alt="car-mini-logo" />
               <span>
                 <b>{vehicle.name}</b>

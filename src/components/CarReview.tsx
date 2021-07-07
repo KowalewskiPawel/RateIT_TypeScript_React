@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
 
 import car from "../assets/car.png";
+
+import "../styles/CarReview.scss";
 
 import { useEffect } from "react";
 
@@ -50,7 +53,10 @@ function CarReview() {
       <h1>
         {make} {model}
       </h1>
-      <div>
+      <Link className="goBack" to={`/cars/${make}/${model}`}>
+        ←
+      </Link>
+      <div className="review">
         {reviewsList.map((item, index) => {
           const tempDate = new Intl.DateTimeFormat("en-GB").format(
             new Date(item.Date)
@@ -58,14 +64,30 @@ function CarReview() {
           const date = tempDate.split("/").join("-");
           return (
             <div key={index}>
-              <p>Version: {item.Version}</p>
-              <p>Year: {item.Year}</p>
-              <p>Engine: {item.Engine}</p>
-              <p>General: {item.General}</p>
-              <p>Pros: {item.Pros}</p>
-              <p>Cons: {item.Cons}</p>
-              <p>Date: {date}</p>
-              <p>User: {item.User}</p>
+              <p>
+                <u>Version:</u> {item.Version}
+              </p>
+              <p>
+                <u>Year:</u> {item.Year}
+              </p>
+              <p>
+                <u>Engine:</u> {item.Engine}
+              </p>
+              <p>
+                <u>General:</u> {item.General}
+              </p>
+              <p>
+                <u>Pros:</u> {item.Pros}
+              </p>
+              <p>
+                <u>Cons:</u> {item.Cons}
+              </p>
+              <p>
+                <u>Date:</u> {date}
+              </p>
+              <p>
+                <u>User:</u> {item.User}
+              </p>
             </div>
           );
         })}

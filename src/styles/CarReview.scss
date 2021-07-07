@@ -1,0 +1,20 @@
+@import "base";
+
+.review-container {
+  height: 90vh;
+  width: 90vw;
+  margin: 2rem auto auto auto;
+  background-color: $dark-grey;
+  text-align: center;
+  border: solid 1px black;
+  border-radius: 10px;
+}
+
+.review {
+  text-align: left;
+  p {
+    font-family: $font-roboto;
+  }
+
+  padding: 1rem 2rem 1rem 2rem;
+}

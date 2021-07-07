@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
@@ -154,6 +155,7 @@ function Main() {
           });
           return (
             <div key={index} className="car-make-bar">
+              <Link to={`/cars/${vehicle.make}/all`}>View</Link>
               <img src={car} alt="car-mini-logo" />
               <span>
                 <b>{vehicle.make}</b>
@@ -164,13 +166,14 @@ function Main() {
           );
         })}
 
-{bikesList.map((vehicle, index) => {
+        {bikesList.map((vehicle, index) => {
           let reviewsLength = 0;
           vehicle.models.forEach((model) => {
             reviewsLength += model.reviews.length;
           });
           return (
             <div key={index} className="bike-make-bar">
+              <Link to={`/bikes/${vehicle.make}/all`}>View</Link>
               <img src={bike} alt="bike-mini-logo" />
               <span>
                 <b>{vehicle.make}</b>

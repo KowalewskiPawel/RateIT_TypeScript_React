@@ -73,6 +73,9 @@ function CarReviews() {
         <option value="reviewsDes">All Reviews ▼</option>
         <option value="reviewsAsc">All Reviews ▲</option>
       </select>
+      <Link className="goBack" to={`/cars/${make}/all`}>
+        ←
+      </Link>
       <div className="makes-list">
         {reviewsList.map((review, index) => {
           const tempDate = new Intl.DateTimeFormat("en-GB").format(
