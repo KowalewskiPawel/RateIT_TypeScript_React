@@ -3,14 +3,15 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 import authService from "../services/auth.service";
-import carsService from "../services/cars.service";
+import bikesService from "../services/bikes.service";
 
 import logo from "../assets/logo.png";
-import car from "../assets/car.png";
+import bike from "../assets/bike.png";
 
 import { useEffect } from "react";
 
 interface Review {
+  _id: string;
   Version: string;
   Year: number;
   Engine: string;
@@ -21,19 +22,16 @@ interface Review {
   Date: Date;
 }
 
-interface Model {
-  name: string;
-  reviews: Review[];
-}
-
 interface Params {
   make: string;
+  model: string;
 }
 
-function CarMake() {
+function BikeReviews() {
   const [username, setUsername] = useState("");
-  const [modelsList, setModelsList] = useState<Model[]>([]);
+  const [reviewsList, setReviewsList] = useState<Review[]>([]);
   const { make } = useParams<Params>();
+  const { model } = useParams<Params>();
 
   const logout = () => {
     authService.logout();
@@ -41,10 +39,10 @@ function CarMake() {
   };
 
   useEffect(() => {
-    carsService
-      .getModels(make)
+    bikesService
+      .getReviews(make, model)
       .then((response) => {
-        setModelsList([...response.data.models]);
+        setReviewsList([...response.data.models[0].reviews]);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -58,13 +56,13 @@ function CarMake() {
   return (
     <div className="main-container">
       <img src={logo} alt="small logo" className="logo-small" />
-      <h1 id="small-title">{make}</h1>
+      <h1 id="small-title">Reviews</h1>
       <button id="logout-button" onClick={() => logout()}>
         LOG OUT
       </button>
       <p id="username">Logged as: {username}</p>
       <div className="vehicles-selection">
-        <img src={car} alt="car logo" className="car-bike-img" />
+        <img src={bike} alt="bike logo" className="car-bike-img" />
       </div>
       <input className="search-bar" type="text" placeholder="Search" />
       <select
@@ -81,22 +79,27 @@ function CarMake() {
         <option value="reviewsDes">All Reviews ▼</option>
         <option value="reviewsAsc">All Reviews ▲</option>
       </select>
-      <Link className="goBack" to="/">
+      <Link className="goBack" to={`/bikes/${make}/all`}>
         ←
       </Link>
       <div className="makes-list">
-        {modelsList.map((vehicle, index) => {
+        {reviewsList.map((review, index) => {
+          const tempDate = new Intl.DateTimeFormat("en-GB").format(
+            new Date(review.Date)
+          );
+          const date = tempDate.split("/").join("-");
           return (
-            <div key={index} className="car-make-bar">
-              <Link to={`/cars/${make}/${vehicle.name}`}>
+            <div key={index} className="bike-make-bar">
+              <Link to={`/bikes/${make}/${model}/${review._id}`}>
                 {" "}
                 <button className="show-btn">SHOW</button>
               </Link>
-              <img src={car} alt="car-mini-logo" />
               <span>
-                <b>{vehicle.name}</b>
+                <b>
+                  {make} {model} {review.Version}
+                </b>
               </span>
-              <span>Reviews: {vehicle.reviews.length}</span>
+              <span>Date: {date}</span>
             </div>
           );
         })}
@@ -105,4 +108,4 @@ function CarMake() {
   );
 }
 
-export default CarMake;
+export default BikeReviews;

@@ -13,6 +13,9 @@ import Main from "./components/Main";
 import CarMake from "./components/CarMake";
 import CarReviews from "./components/CarReviews";
 import CarReview from "./components/CarReview";
+import BikeMake from "./components/BikeMake";
+import BikeReview from "./components/BikeReview";
+import BikeReviews from "./components/BikeReviews";
 
 import "./App.scss";
 
@@ -63,6 +66,15 @@ function App() {
           </Route>
           <Route exact path="/cars/:make/:model/:id">
             <CarReview />
+          </Route>
+          <Route exact path="/bikes/:make/all">
+            <BikeMake />
+          </Route>
+          <Route exact path="/bikes/:make/:model">
+            <BikeReviews />
+          </Route>
+          <Route exact path="/bikes/:make/:model/:id">
+            <BikeReview />
           </Route>
           <Route path="/">
             <NotFound />

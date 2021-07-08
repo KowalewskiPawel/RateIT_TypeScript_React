@@ -45,7 +45,7 @@ interface Bike {
 }
 
 function Main() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState<string | null>("");
   const [selectCars, setSelectCars] = useState(true);
   const [selectBikes, setSelectBikes] = useState(true);
   const [carsList, setCarsList] = useState<Car[]>([]);
@@ -92,6 +92,12 @@ function Main() {
       .catch((err) => console.error(err));
   }, []);
 
+  useEffect(() => {
+    const username: any = localStorage.getItem("username");
+    JSON.parse(username);
+    return setUsername(username);
+  }, []);
+
   return (
     <div className="main-container">
       <img src={logo} alt="small logo" className="logo-small" />
@@ -99,7 +105,7 @@ function Main() {
       <button id="logout-button" onClick={() => logout()}>
         LOG OUT
       </button>
-      <p id="username">Hi, {username}!</p>
+      <p id="username">Logged as: {username}</p>
       <div className="vehicles-selection">
         <img
           src={bike}
@@ -155,7 +161,10 @@ function Main() {
           });
           return (
             <div key={index} className="car-make-bar">
-              <Link to={`/cars/${vehicle.make}/all`}>View</Link>
+              <Link to={`/cars/${vehicle.make}/all`}>
+                {" "}
+                <button className="show-btn">SHOW</button>
+              </Link>
               <img src={car} alt="car-mini-logo" />
               <span>
                 <b>{vehicle.make}</b>
@@ -173,7 +182,9 @@ function Main() {
           });
           return (
             <div key={index} className="bike-make-bar">
-              <Link to={`/bikes/${vehicle.make}/all`}>View</Link>
+              <Link to={`/bikes/${vehicle.make}/all`}>
+                <button className="show-btn">SHOW</button>
+              </Link>
               <img src={bike} alt="bike-mini-logo" />
               <span>
                 <b>{vehicle.make}</b>

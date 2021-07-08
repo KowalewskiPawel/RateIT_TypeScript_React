@@ -15,6 +15,24 @@ class CarsService {
   getReviews(make, model) {
     return axios.get(`${API_URL}/cars/${make}/${model}`);
   }
+
+  postReview(Version, Year, Engine, General, Pros, Cons, User, make, model) {
+    return axios.post(
+      `${API_URL}/cars/${make}/${model}`,
+      {
+        headers: authHeader(),
+      },
+      {
+        Version,
+        Year,
+        Engine,
+        General,
+        Pros,
+        Cons,
+        User,
+      }
+    );
+  }
 }
 
 export default new CarsService();

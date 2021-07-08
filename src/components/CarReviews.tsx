@@ -47,6 +47,12 @@ function CarReviews() {
       .catch((err) => console.error(err));
   }, []);
 
+  useEffect(() => {
+    const username: any = localStorage.getItem("username");
+    JSON.parse(username);
+    return setUsername(username);
+  }, []);
+
   return (
     <div className="main-container">
       <img src={logo} alt="small logo" className="logo-small" />
@@ -54,7 +60,7 @@ function CarReviews() {
       <button id="logout-button" onClick={() => logout()}>
         LOG OUT
       </button>
-      <p id="username">Hi, {username}!</p>
+      <p id="username">Logged as: {username}</p>
       <div className="vehicles-selection">
         <img src={car} alt="car logo" className="car-bike-img" />
       </div>
@@ -84,7 +90,10 @@ function CarReviews() {
           const date = tempDate.split("/").join("-");
           return (
             <div key={index} className="car-make-bar">
-              <Link to={`/cars/${make}/${model}/${review._id}`}>View</Link>
+              <Link to={`/cars/${make}/${model}/${review._id}`}>
+                {" "}
+                <button className="show-btn">SHOW</button>
+              </Link>
               <span>
                 <b>
                   {make} {model} {review.Version}

@@ -50,10 +50,21 @@
 }
 
 #username {
+  width: inherit;
+  height: auto;
+  margin: -3vw auto auto auto;
+  word-wrap: break-word;
+  background-color: $grey;
+  padding-left: 2rem;
+}
+
+.show-btn {
   width: auto;
   height: auto;
-  margin: -5vh -68vw auto auto;
-  word-wrap: break-word;
+  padding: 0.2rem;
+  background: $orange;
+  border: solid 1px black;
+  border-radius: 10px;
 }
 
 .search-bar {

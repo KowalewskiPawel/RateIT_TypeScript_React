@@ -16,6 +16,10 @@ class AuthService {
             "user",
             JSON.stringify(response.data.accessToken)
           );
+          localStorage.setItem(
+            "username",
+            JSON.stringify(response.data.username)
+          );
           return;
         }
       });
@@ -53,6 +57,7 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("username");
 
     return axios.get(API_URL + "/users/logout", {
       headers: authHeader(),

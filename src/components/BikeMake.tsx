@@ -3,10 +3,10 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 import authService from "../services/auth.service";
-import carsService from "../services/cars.service";
+import bikesService from "../services/bikes.service";
 
 import logo from "../assets/logo.png";
-import car from "../assets/car.png";
+import bike from "../assets/bike.png";
 
 import { useEffect } from "react";
 
@@ -30,7 +30,7 @@ interface Params {
   make: string;
 }
 
-function CarMake() {
+function BikeMake() {
   const [username, setUsername] = useState("");
   const [modelsList, setModelsList] = useState<Model[]>([]);
   const { make } = useParams<Params>();
@@ -41,7 +41,7 @@ function CarMake() {
   };
 
   useEffect(() => {
-    carsService
+    bikesService
       .getModels(make)
       .then((response) => {
         setModelsList([...response.data.models]);
@@ -64,7 +64,7 @@ function CarMake() {
       </button>
       <p id="username">Logged as: {username}</p>
       <div className="vehicles-selection">
-        <img src={car} alt="car logo" className="car-bike-img" />
+        <img src={bike} alt="bike logo" className="car-bike-img" />
       </div>
       <input className="search-bar" type="text" placeholder="Search" />
       <select
@@ -87,12 +87,12 @@ function CarMake() {
       <div className="makes-list">
         {modelsList.map((vehicle, index) => {
           return (
-            <div key={index} className="car-make-bar">
-              <Link to={`/cars/${make}/${vehicle.name}`}>
+            <div key={index} className="bike-make-bar">
+              <Link to={`/bikes/${make}/${vehicle.name}`}>
                 {" "}
                 <button className="show-btn">SHOW</button>
               </Link>
-              <img src={car} alt="car-mini-logo" />
+              <img src={bike} alt="bike-mini-logo" />
               <span>
                 <b>{vehicle.name}</b>
               </span>
@@ -105,4 +105,4 @@ function CarMake() {
   );
 }
 
-export default CarMake;
+export default BikeMake;
