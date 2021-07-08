@@ -17,6 +17,7 @@ import AddCarReview from "./components/AddCarReview";
 import BikeMake from "./components/BikeMake";
 import BikeReview from "./components/BikeReview";
 import BikeReviews from "./components/BikeReviews";
+import AddBikeReview from "./components/AddBikeReview";
 
 import "./App.scss";
 
@@ -76,6 +77,9 @@ function App() {
           </Route>
           <Route exact path="/bikes/:make/:model">
             <BikeReviews />
+          </Route>
+          <Route exact path="/cars/:make/:model/addreview">
+            <AddBikeReview />
           </Route>
           <Route exact path="/bikes/:make/:model/:id">
             <BikeReview />

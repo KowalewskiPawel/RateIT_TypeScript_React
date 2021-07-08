@@ -1,16 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
 
 import car from "../assets/car.png";
 
 import "../styles/CarReview.scss";
-
-import { useEffect } from "react";
 
 interface Review {
   Version: string;
@@ -33,12 +30,12 @@ function CarReview() {
   const [edit, setEdit] = useState(false);
   const [username, setUsername] = useState("");
 
-  const version: any = useRef();
-  const year: any = useRef();
-  const engine: any = useRef();
-  const general: any = useRef();
-  const pros: any = useRef();
-  const cons: any = useRef();
+  const versionRef: any = useRef();
+  const yearRef: any = useRef();
+  const engineRef: any = useRef();
+  const generalRef: any = useRef();
+  const prosRef: any = useRef();
+  const consRef: any = useRef();
 
   const [reviewsList, setReviewsList] = useState<Review[]>([]);
   const { make } = useParams<Params>();
@@ -57,6 +54,37 @@ function CarReview() {
       .catch((err) => console.error(err));
   };
 
+  const editReview = () => {
+    const version = versionRef.current.innerText;
+    const year = yearRef.current.innerText;
+    const engine = engineRef.current.innerText;
+    const general = generalRef.current.innerText;
+    const pros = prosRef.current.innerText;
+    const cons = consRef.current.innerText;
+
+    if (!version || !year || !engine || !general || !pros || !cons) {
+      return;
+    }
+
+    return carsService
+      .editReview(
+        version,
+        year,
+        engine,
+        general,
+        pros,
+        cons,
+        username,
+        make,
+        model,
+        id
+      )
+      .then((response) => {
+        return window.location.reload();
+      })
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     carsService
       .getReviews(make, model)
@@ -67,7 +95,7 @@ function CarReview() {
         return setReviewsList([...singleReview]);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id, make, model]);
 
   useEffect(() => {
     const username: any = localStorage.getItem("username");
@@ -107,7 +135,16 @@ function CarReview() {
                     >
                       {!edit ? "EDIT REVIEW" : "CANCEL EDIT"}
                     </button>
-                    {edit ? <button>SUBMIT</button> : ""}
+                    {edit ? (
+                      <button
+                        onClick={() => editReview()}
+                        className="submit-review-btn"
+                      >
+                        SUBMIT
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </>
                 ) : (
                   ""
@@ -115,37 +152,37 @@ function CarReview() {
               </div>
               <p>
                 <u>Version:</u>{" "}
-                <p ref={version} contentEditable={edit}>
+                <p ref={versionRef} contentEditable={edit}>
                   {item.Version}
                 </p>
               </p>
               <p>
                 <u>Year:</u>{" "}
-                <p ref={year} contentEditable={edit}>
+                <p ref={yearRef} contentEditable={edit}>
                   {item.Year}
                 </p>
               </p>
               <p>
                 <u>Engine:</u>{" "}
-                <p ref={engine} contentEditable={edit}>
+                <p ref={engineRef} contentEditable={edit}>
                   {item.Engine}
                 </p>
               </p>
               <p>
                 <u>General:</u>{" "}
-                <p ref={general} contentEditable={edit}>
+                <p ref={generalRef} contentEditable={edit}>
                   {item.General}
                 </p>
               </p>
               <p>
                 <u>Pros:</u>{" "}
-                <p ref={pros} contentEditable={edit}>
+                <p ref={prosRef} contentEditable={edit}>
                   {item.Pros}
                 </p>
               </p>
               <p>
                 <u>Cons:</u>{" "}
-                <p ref={cons} contentEditable={edit}>
+                <p ref={consRef} contentEditable={edit}>
                   {item.Cons}
                 </p>
               </p>

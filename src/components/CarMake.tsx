@@ -54,7 +54,7 @@ function CarMake() {
         setModelsList([...response.data.models]);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [make]);
 
   useEffect(() => {
     const username: any = localStorage.getItem("username");

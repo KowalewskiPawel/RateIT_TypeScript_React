@@ -3,11 +3,9 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import carsService from "../services/cars.service";
+import bikesService from "../services/bikes.service";
 
-import car from "../assets/car.png";
-
-import "../styles/AddCarReview.scss";
+import bike from "../assets/bike.png";
 
 interface Params {
   make: string;
@@ -15,7 +13,7 @@ interface Params {
   id: string;
 }
 
-function AddCarReview() {
+function AddBikeReview() {
   const [username, setUsername] = useState("");
   const [version, setVersion] = useState<string>("");
   const [year, setYear] = useState("");
@@ -32,7 +30,7 @@ function AddCarReview() {
   const addReview = (event: any) => {
     event.preventDefault();
 
-    return carsService
+    return bikesService
       .postReview(
         version,
         year,
@@ -45,7 +43,7 @@ function AddCarReview() {
         model
       )
       .then((response) => {
-        history.push(`/cars/${make}/${model}`);
+        history.push(`/bikes/${make}/${model}`);
         return window.location.reload();
       })
       .catch((err) => console.error(err));
@@ -59,11 +57,11 @@ function AddCarReview() {
 
   return (
     <div className="review-container">
-      <img src={car} alt="small logo" />
+      <img src={bike} alt="small logo" />
       <h1>
         {make} {model}
       </h1>
-      <Link className="goBack" to={`/cars/${make}/${model}`}>
+      <Link className="goBack" to={`/bikes/${make}/${model}`}>
         ←
       </Link>
 
@@ -142,4 +140,4 @@ function AddCarReview() {
   );
 }
 
-export default AddCarReview;
+export default AddBikeReview;

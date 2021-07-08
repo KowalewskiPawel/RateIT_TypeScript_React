@@ -27,3 +27,9 @@
 
   margin: 1rem;
 }
+
+.submit-review-btn {
+  @include btn;
+
+  background: $green;
+}

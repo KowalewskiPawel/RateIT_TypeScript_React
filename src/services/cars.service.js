@@ -34,6 +34,35 @@ class CarsService {
     );
   }
 
+  editReview(
+    Version,
+    Year,
+    Engine,
+    General,
+    Pros,
+    Cons,
+    User,
+    make,
+    model,
+    id
+  ) {
+    return axios.put(
+      `${API_URL}/cars/${make}/${model}/${id}`,
+      {
+        Version,
+        Year,
+        Engine,
+        General,
+        Pros,
+        Cons,
+        User,
+      },
+      {
+        headers: authHeader(),
+      }
+    );
+  }
+
   deleteReview(make, model, id) {
     return axios.delete(`${API_URL}/cars/${make}/${model}/${id}`, {
       headers: authHeader(),

@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import authService from "../services/auth.service";
 import bikesService from "../services/bikes.service";
 
 import logo from "../assets/logo.png";
 import bike from "../assets/bike.png";
-
-import { useEffect } from "react";
 
 interface Review {
   _id: string;
@@ -33,9 +32,16 @@ function BikeReviews() {
   const { make } = useParams<Params>();
   const { model } = useParams<Params>();
 
-  const logout = () => {
-    authService.logout();
-    return window.location.reload();
+  const history = createBrowserHistory();
+
+  const logout = async () => {
+    try {
+      authService.logout();
+      history.push("/");
+      return window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -45,7 +51,7 @@ function BikeReviews() {
         setReviewsList([...response.data.models[0].reviews]);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [make, model]);
 
   useEffect(() => {
     const username: any = localStorage.getItem("username");
@@ -104,6 +110,9 @@ function BikeReviews() {
           );
         })}
       </div>
+      <Link id="link-add-review" to={`/bikes/${make}/${model}/addreview`}>
+        <button className="add-review-btn">ADD REVIEW</button>
+      </Link>
     </div>
   );
 }
