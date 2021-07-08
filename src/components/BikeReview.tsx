@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import bikesService from "../services/cars.service";
+import bikesService from "../services/bikes.service";
 
 import bike from "../assets/bike.png";
 

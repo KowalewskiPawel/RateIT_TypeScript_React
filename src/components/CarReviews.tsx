@@ -53,7 +53,7 @@ function CarReviews() {
         setReviewsList([...response.data.models[0].reviews]);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [make, model]);
 
   useEffect(() => {
     const username: any = localStorage.getItem("username");

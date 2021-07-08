@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { createBrowserHistory } from "history";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
@@ -51,7 +50,6 @@ function Main() {
   const [selectBikes, setSelectBikes] = useState(true);
   const [carsList, setCarsList] = useState<Car[]>([]);
   const [bikesList, setBikesList] = useState<Bike[]>([]);
-  const history = createBrowserHistory();
 
   const logout = () => {
     authService.logout();
@@ -156,46 +154,50 @@ function Main() {
         <option value="reviewsAsc">All Reviews ▲</option>
       </select>
       <div className="makes-list">
-        {carsList.map((vehicle, index) => {
-          let reviewsLength = 0;
-          vehicle.models.forEach((model) => {
-            reviewsLength += model.reviews.length;
-          });
-          return (
-            <div key={index} className="car-make-bar">
-              <Link to={`/cars/${vehicle.make}/all`}>
-                {" "}
-                <button className="show-btn">SHOW</button>
-              </Link>
-              <img src={car} alt="car-mini-logo" />
-              <span>
-                <b>{vehicle.make}</b>
-              </span>
-              <span>Models: {vehicle.models.length}</span>
-              <span>Reviews: {reviewsLength}</span>
-            </div>
-          );
-        })}
+        {selectCars
+          ? carsList.map((vehicle, index) => {
+              let reviewsLength = 0;
+              vehicle.models.forEach((model) => {
+                reviewsLength += model.reviews.length;
+              });
+              return (
+                <div key={index} className="car-make-bar">
+                  <Link to={`/cars/${vehicle.make}/all`}>
+                    {" "}
+                    <button className="show-btn">SHOW</button>
+                  </Link>
+                  <img src={car} alt="car-mini-logo" />
+                  <span>
+                    <b>{vehicle.make}</b>
+                  </span>
+                  <span>Models: {vehicle.models.length}</span>
+                  <span>Reviews: {reviewsLength}</span>
+                </div>
+              );
+            })
+          : ""}
 
-        {bikesList.map((vehicle, index) => {
-          let reviewsLength = 0;
-          vehicle.models.forEach((model) => {
-            reviewsLength += model.reviews.length;
-          });
-          return (
-            <div key={index} className="bike-make-bar">
-              <Link to={`/bikes/${vehicle.make}/all`}>
-                <button className="show-btn">SHOW</button>
-              </Link>
-              <img src={bike} alt="bike-mini-logo" />
-              <span>
-                <b>{vehicle.make}</b>
-              </span>
-              <span>Models: {vehicle.models.length}</span>
-              <span>Reviews: {reviewsLength}</span>
-            </div>
-          );
-        })}
+        {selectBikes
+          ? bikesList.map((vehicle, index) => {
+              let reviewsLength = 0;
+              vehicle.models.forEach((model) => {
+                reviewsLength += model.reviews.length;
+              });
+              return (
+                <div key={index} className="bike-make-bar">
+                  <Link to={`/bikes/${vehicle.make}/all`}>
+                    <button className="show-btn">SHOW</button>
+                  </Link>
+                  <img src={bike} alt="bike-mini-logo" />
+                  <span>
+                    <b>{vehicle.make}</b>
+                  </span>
+                  <span>Models: {vehicle.models.length}</span>
+                  <span>Reviews: {reviewsLength}</span>
+                </div>
+              );
+            })
+          : ""}
       </div>
     </div>
   );

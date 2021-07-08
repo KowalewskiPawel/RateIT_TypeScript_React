@@ -78,7 +78,7 @@ function App() {
           <Route exact path="/bikes/:make/:model">
             <BikeReviews />
           </Route>
-          <Route exact path="/cars/:make/:model/addreview">
+          <Route exact path="/bikes/:make/:model/addreview">
             <AddBikeReview />
           </Route>
           <Route exact path="/bikes/:make/:model/:id">
