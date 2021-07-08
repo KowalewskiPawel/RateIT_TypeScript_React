@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
@@ -29,11 +30,32 @@ interface Params {
 }
 
 function CarReview() {
+  const [edit, setEdit] = useState(false);
   const [username, setUsername] = useState("");
+
+  const version: any = useRef();
+  const year: any = useRef();
+  const engine: any = useRef();
+  const general: any = useRef();
+  const pros: any = useRef();
+  const cons: any = useRef();
+
   const [reviewsList, setReviewsList] = useState<Review[]>([]);
   const { make } = useParams<Params>();
   const { model } = useParams<Params>();
   const { id } = useParams<Params>();
+
+  const history = createBrowserHistory();
+
+  const deleteReview = () => {
+    carsService
+      .deleteReview(make, model, id)
+      .then((response) => {
+        history.push(`/cars/${make}/${model}`);
+        return window.location.reload();
+      })
+      .catch((err) => console.error(err));
+  };
 
   useEffect(() => {
     carsService
@@ -45,6 +67,12 @@ function CarReview() {
         return setReviewsList([...singleReview]);
       })
       .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    const username: any = localStorage.getItem("username");
+    JSON.parse(username);
+    return setUsername(username);
   }, []);
 
   return (
@@ -64,23 +92,62 @@ function CarReview() {
           const date = tempDate.split("/").join("-");
           return (
             <div key={index}>
+              <div>
+                {item.User === username ? (
+                  <>
+                    <button
+                      onClick={() => deleteReview()}
+                      className="delete-review-btn"
+                    >
+                      DELETE REVIEW
+                    </button>
+                    <button
+                      onClick={() => setEdit((prevState) => !prevState)}
+                      className="edit-review-btn"
+                    >
+                      {!edit ? "EDIT REVIEW" : "CANCEL EDIT"}
+                    </button>
+                    {edit ? <button>SUBMIT</button> : ""}
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
               <p>
-                <u>Version:</u> {item.Version}
+                <u>Version:</u>{" "}
+                <p ref={version} contentEditable={edit}>
+                  {item.Version}
+                </p>
               </p>
               <p>
-                <u>Year:</u> {item.Year}
+                <u>Year:</u>{" "}
+                <p ref={year} contentEditable={edit}>
+                  {item.Year}
+                </p>
               </p>
               <p>
-                <u>Engine:</u> {item.Engine}
+                <u>Engine:</u>{" "}
+                <p ref={engine} contentEditable={edit}>
+                  {item.Engine}
+                </p>
               </p>
               <p>
-                <u>General:</u> {item.General}
+                <u>General:</u>{" "}
+                <p ref={general} contentEditable={edit}>
+                  {item.General}
+                </p>
               </p>
               <p>
-                <u>Pros:</u> {item.Pros}
+                <u>Pros:</u>{" "}
+                <p ref={pros} contentEditable={edit}>
+                  {item.Pros}
+                </p>
               </p>
               <p>
-                <u>Cons:</u> {item.Cons}
+                <u>Cons:</u>{" "}
+                <p ref={cons} contentEditable={edit}>
+                  {item.Cons}
+                </p>
               </p>
               <p>
                 <u>Date:</u> {date}

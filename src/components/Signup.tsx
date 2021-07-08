@@ -48,6 +48,7 @@ function Signup() {
             type="text"
             placeholder="Username"
             value={username}
+            maxLength={10}
             onChange={(e) => setUsername(e.target.value)}
             required
           />

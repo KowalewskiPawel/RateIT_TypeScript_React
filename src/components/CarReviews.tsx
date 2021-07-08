@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
@@ -8,7 +9,7 @@ import carsService from "../services/cars.service";
 import logo from "../assets/logo.png";
 import car from "../assets/car.png";
 
-import { useEffect } from "react";
+import "../styles/CarReviews.scss";
 
 interface Review {
   _id: string;
@@ -33,9 +34,16 @@ function CarReviews() {
   const { make } = useParams<Params>();
   const { model } = useParams<Params>();
 
-  const logout = () => {
-    authService.logout();
-    return window.location.reload();
+  const history = createBrowserHistory();
+
+  const logout = async () => {
+    try {
+      authService.logout();
+      history.push("/");
+      return window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -104,6 +112,9 @@ function CarReviews() {
           );
         })}
       </div>
+      <Link id="link-add-review" to={`/cars/${make}/${model}/addreview`}>
+        <button className="add-review-btn">ADD REVIEW</button>
+      </Link>
     </div>
   );
 }

@@ -7,3 +7,10 @@ $blue: #38f3ff;
 $red: #ff3838;
 $font-racing: "Racing Sans One", cursive;
 $font-roboto: "Roboto Mono", monospace;
+
+@mixin btn {
+  border: 1px solid #000000;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  padding: 0.2rem;
+}

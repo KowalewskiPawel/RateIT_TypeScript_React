@@ -1,7 +1,8 @@
 @import "base";
 
 .review-container {
-  height: 90vh;
+  min-height: 90vh;
+  height: auto;
   width: 90vw;
   margin: 2rem auto auto auto;
   background-color: $dark-grey;
@@ -17,4 +18,12 @@
   }
 
   padding: 1rem 2rem 1rem 2rem;
+}
+
+.edit-review-btn {
+  @include btn;
+
+  background: $orange;
+
+  margin: 1rem;
 }

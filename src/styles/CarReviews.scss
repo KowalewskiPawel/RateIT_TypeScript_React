@@ -1,0 +1,24 @@
+@import "base";
+
+#link-add-review {
+  text-decoration: none;
+}
+
+.add-review-btn {
+  @include btn;
+  background: $green;
+
+  display: block;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.delete-review-btn {
+  @include btn;
+  background: $red;
+}
+
+.makes-list {
+  max-height: 54vh;
+  overflow-y: scroll;
+}

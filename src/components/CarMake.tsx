@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
@@ -34,10 +35,16 @@ function CarMake() {
   const [username, setUsername] = useState("");
   const [modelsList, setModelsList] = useState<Model[]>([]);
   const { make } = useParams<Params>();
+  const history = createBrowserHistory();
 
-  const logout = () => {
-    authService.logout();
-    return window.location.reload();
+  const logout = async () => {
+    try {
+      authService.logout();
+      history.push("/");
+      return window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {

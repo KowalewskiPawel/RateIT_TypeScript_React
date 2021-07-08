@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import authService from "../services/auth.service";
 import carsService from "../services/cars.service";
@@ -50,6 +51,7 @@ function Main() {
   const [selectBikes, setSelectBikes] = useState(true);
   const [carsList, setCarsList] = useState<Car[]>([]);
   const [bikesList, setBikesList] = useState<Bike[]>([]);
+  const history = createBrowserHistory();
 
   const logout = () => {
     authService.logout();

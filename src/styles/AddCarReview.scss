@@ -1,0 +1,32 @@
+@import "base";
+
+.goBack {
+  top: -4vh;
+}
+
+.add-review-btn {
+  margin: auto;
+}
+
+.add-review {
+  width: 90vw;
+  text-align: left;
+  padding: 0 1rem 0 1rem;
+  margin-top: -2rem;
+  u {
+    font-weight: bold;
+  }
+  p {
+    font-size: 10px;
+    font-family: $font-roboto;
+    word-wrap: break-word;
+  }
+  .input-text {
+    background: $grey;
+    border: solid black 0px;
+    border-radius: 1em;
+    color: $white;
+    width: 80vw;
+    height: 4vh;
+  }
+}

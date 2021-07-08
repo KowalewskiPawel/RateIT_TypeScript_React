@@ -20,9 +20,6 @@ class CarsService {
     return axios.post(
       `${API_URL}/cars/${make}/${model}`,
       {
-        headers: authHeader(),
-      },
-      {
         Version,
         Year,
         Engine,
@@ -30,8 +27,17 @@ class CarsService {
         Pros,
         Cons,
         User,
+      },
+      {
+        headers: authHeader(),
       }
     );
+  }
+
+  deleteReview(make, model, id) {
+    return axios.delete(`${API_URL}/cars/${make}/${model}/${id}`, {
+      headers: authHeader(),
+    });
   }
 }
 
