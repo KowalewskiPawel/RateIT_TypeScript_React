@@ -3,6 +3,8 @@ import Logo from "./Logo";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { useDebouncedCallback } from "use-debounce";
+
 import AuthService from "../services/auth.service.js";
 
 function ForgotPassword() {
@@ -31,7 +33,7 @@ function ForgotPassword() {
           ←
         </Link>
         <h1>FORGOT PASSWORD</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={useDebouncedCallback(handleSubmit, 400)}>
           <input
             className="inputLogin"
             id="mail"

@@ -2,6 +2,7 @@ import Logo from "./Logo";
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 import AuthService from "../services/auth.service.js";
 
@@ -41,10 +42,9 @@ function Signup() {
           ←
         </Link>
         <h1>SIGN UP</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={useDebouncedCallback(handleSubmit, 400)}>
           <input
             className="inputLogin"
-            id="username"
             type="text"
             placeholder="Username"
             value={username}

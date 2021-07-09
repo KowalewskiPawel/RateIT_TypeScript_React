@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { useDebouncedCallback } from "use-debounce";
 
 import bikesService from "../services/bikes.service";
 
@@ -66,7 +67,7 @@ function AddBikeReview() {
       </Link>
 
       <div className="add-review">
-        <form onSubmit={addReview}>
+        <form onSubmit={useDebouncedCallback(addReview, 400)}>
           <button className="add-review-btn">SUBMIT REVIEW</button>
           <p>
             <u>Version:</u>

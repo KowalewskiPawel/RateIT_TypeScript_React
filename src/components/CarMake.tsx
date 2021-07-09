@@ -34,6 +34,9 @@ interface Params {
 function CarMake() {
   const [username, setUsername] = useState("");
   const [modelsList, setModelsList] = useState<Model[]>([]);
+  const [filteredModelsList, setFilteredModelsList] = useState<Model[]>([]);
+  const [models, setModels] = useState<Model[]>([...modelsList]);
+
   const { make } = useParams<Params>();
   const history = createBrowserHistory();
 
@@ -45,6 +48,27 @@ function CarMake() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleChange = (event: any) => {
+    if (!event.target.value.length) {
+      setFilteredModelsList([]);
+    }
+
+    const newModelsList = modelsList.filter((model) => {
+      const lowerCase = model.name.toLowerCase();
+      const input = event.target.value.toLowerCase();
+
+      return lowerCase.includes(input);
+    });
+
+    setFilteredModelsList([...newModelsList]);
+
+    return;
+  };
+
+  const setSort = (value: string) => {
+    return;
   };
 
   useEffect(() => {
@@ -62,6 +86,15 @@ function CarMake() {
     return setUsername(username);
   }, []);
 
+  useEffect(() => {
+    if (filteredModelsList.length > 0) {
+      setModels([...filteredModelsList]);
+    }
+    if (filteredModelsList.length === 0) {
+      setModels([...modelsList]);
+    }
+  }, [modelsList, filteredModelsList]);
+
   return (
     <div className="main-container">
       <img src={logo} alt="small logo" className="logo-small" />
@@ -73,11 +106,17 @@ function CarMake() {
       <div className="vehicles-selection">
         <img src={car} alt="car logo" className="car-bike-img" />
       </div>
-      <input className="search-bar" type="text" placeholder="Search" />
+      <input
+        onChange={(event) => handleChange(event)}
+        onKeyUp={(event) => handleChange(event)}
+        className="search-bar"
+        type="text"
+        placeholder="Search"
+      />
       <select
         name="sortBy"
         className="sortList"
-        //onChange={(event) => //setSort(event.target.value)}
+        onChange={(event) => setSort(event.target.value)}
         value="sort"
       >
         <option value="">Sort by</option>
@@ -92,7 +131,7 @@ function CarMake() {
         ←
       </Link>
       <div className="makes-list">
-        {modelsList.map((vehicle, index) => {
+        {models.map((vehicle, index) => {
           return (
             <div key={index} className="car-make-bar">
               <Link to={`/cars/${make}/${vehicle.name}`}>

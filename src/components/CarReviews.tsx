@@ -31,6 +31,8 @@ interface Params {
 function CarReviews() {
   const [username, setUsername] = useState("");
   const [reviewsList, setReviewsList] = useState<Review[]>([]);
+  const [filteredReviewsList, setFilteredReviewsList] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([...reviewsList]);
   const { make } = useParams<Params>();
   const { model } = useParams<Params>();
 
@@ -44,6 +46,27 @@ function CarReviews() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleChange = (event: any) => {
+    if (!event.target.value.length) {
+      setFilteredReviewsList([]);
+    }
+
+    const newReviewsList = reviewsList.filter((review) => {
+      const lowerCase = review.Version.toLowerCase();
+      const input = event.target.value.toLowerCase();
+
+      return lowerCase.includes(input);
+    });
+
+    setFilteredReviewsList([...newReviewsList]);
+
+    return;
+  };
+
+  const setSort = (value: string) => {
+    return;
   };
 
   useEffect(() => {
@@ -61,6 +84,15 @@ function CarReviews() {
     return setUsername(username);
   }, []);
 
+  useEffect(() => {
+    if (filteredReviewsList.length > 0) {
+      setReviews([...filteredReviewsList]);
+    }
+    if (filteredReviewsList.length === 0) {
+      setReviews([...reviewsList]);
+    }
+  }, [reviewsList, filteredReviewsList]);
+
   return (
     <div className="main-container">
       <img src={logo} alt="small logo" className="logo-small" />
@@ -72,11 +104,17 @@ function CarReviews() {
       <div className="vehicles-selection">
         <img src={car} alt="car logo" className="car-bike-img" />
       </div>
-      <input className="search-bar" type="text" placeholder="Search" />
+      <input
+        onChange={(event) => handleChange(event)}
+        onKeyUp={(event) => handleChange(event)}
+        className="search-bar"
+        type="text"
+        placeholder="Search"
+      />
       <select
         name="sortBy"
         className="sortList"
-        //onChange={(event) => //setSort(event.target.value)}
+        onChange={(event) => setSort(event.target.value)}
         value="sort"
       >
         <option value="">Sort by</option>
@@ -91,7 +129,7 @@ function CarReviews() {
         ←
       </Link>
       <div className="makes-list">
-        {reviewsList.map((review, index) => {
+        {reviews.map((review, index) => {
           const tempDate = new Intl.DateTimeFormat("en-GB").format(
             new Date(review.Date)
           );

@@ -50,10 +50,45 @@ function Main() {
   const [selectBikes, setSelectBikes] = useState(true);
   const [carsList, setCarsList] = useState<Car[]>([]);
   const [bikesList, setBikesList] = useState<Bike[]>([]);
+  const [filteredCarsList, setFilteredCarsList] = useState<Car[]>([]);
+  const [filteredBikesList, setFilteredBikesList] = useState<Bike[]>([]);
+
+  const [cars, setCars] = useState<Car[]>([...carsList]);
+  const [bikes, setBikes] = useState<Bike[]>([...bikesList]);
 
   const logout = () => {
     authService.logout();
     return window.location.reload();
+  };
+
+  const handleChange = (event: any) => {
+    if (!event.target.value.length) {
+      setFilteredCarsList([]);
+      setFilteredBikesList([]);
+    }
+
+    const newCarsList = carsList.filter((car) => {
+      const lowerCase = car.make.toLowerCase();
+      const input = event.target.value.toLowerCase();
+
+      return lowerCase.includes(input);
+    });
+
+    const newBikesList = bikesList.filter((bike) => {
+      const lowerCase = bike.make.toLowerCase();
+      const input = event.target.value.toLowerCase();
+
+      return lowerCase.includes(input);
+    });
+
+    setFilteredCarsList([...newCarsList]);
+    setFilteredBikesList([...newBikesList]);
+
+    return;
+  };
+
+  const setSort = (value: string) => {
+    return;
   };
 
   const switchVehicles = (vehicle: string) => {
@@ -98,6 +133,23 @@ function Main() {
     return setUsername(username);
   }, []);
 
+  useEffect(() => {
+    if (filteredCarsList.length > 0) {
+      setCars([...filteredCarsList]);
+    }
+    if (filteredCarsList.length === 0) {
+      setCars([...carsList]);
+    }
+
+    if (filteredBikesList.length > 0) {
+      setBikes([...filteredBikesList]);
+    }
+
+    if (filteredBikesList.length === 0) {
+      setBikes([...bikesList]);
+    }
+  }, [filteredBikesList, filteredCarsList, carsList, bikesList]);
+
   return (
     <div className="main-container">
       <img src={logo} alt="small logo" className="logo-small" />
@@ -138,11 +190,17 @@ function Main() {
           }
         />
       </div>
-      <input className="search-bar" type="text" placeholder="Search" />
+      <input
+        onChange={(event) => handleChange(event)}
+        onKeyUp={(event) => handleChange(event)}
+        className="search-bar"
+        type="text"
+        placeholder="Search"
+      />
       <select
         name="sortBy"
         className="sortList"
-        //onChange={(event) => //setSort(event.target.value)}
+        onChange={(event) => setSort(event.target.value)}
         value="sort"
       >
         <option value="">Sort by</option>
@@ -155,7 +213,7 @@ function Main() {
       </select>
       <div className="makes-list">
         {selectCars
-          ? carsList.map((vehicle, index) => {
+          ? cars.map((vehicle, index) => {
               let reviewsLength = 0;
               vehicle.models.forEach((model) => {
                 reviewsLength += model.reviews.length;
@@ -178,7 +236,7 @@ function Main() {
           : ""}
 
         {selectBikes
-          ? bikesList.map((vehicle, index) => {
+          ? bikes.map((vehicle, index) => {
               let reviewsLength = 0;
               vehicle.models.forEach((model) => {
                 reviewsLength += model.reviews.length;
