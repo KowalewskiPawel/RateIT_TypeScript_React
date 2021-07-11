@@ -6,6 +6,11 @@ html,
   font-family: $font-roboto;
 }
 
+.loading {
+  width: 100px;
+  height: 100px;
+}
+
 html {
   background-color: $grey;
 }
@@ -28,4 +33,8 @@ button:active {
 
 .warningMessage {
   color: $red;
+}
+
+.goBack {
+  top: 0vw;
 }

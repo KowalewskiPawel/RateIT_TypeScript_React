@@ -67,6 +67,60 @@ function BikeMake() {
   };
 
   const setSort = (value: string) => {
+    if (!value) {
+      return;
+    }
+
+    const tempModelsList = [...models];
+
+    switch (value) {
+      case "nameDes":
+        tempModelsList.sort((a, b) => {
+          let nameA = a.name.toUpperCase();
+          let nameB = b.name.toUpperCase();
+
+          if (nameA < nameB) {
+            return -1;
+          }
+
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
+        break;
+      case "nameAsc":
+        tempModelsList.sort((a, b) => {
+          let nameA = a.name.toUpperCase();
+          let nameB = b.name.toUpperCase();
+          if (nameA < nameB) {
+            return 1;
+          }
+          if (nameA > nameB) {
+            return -1;
+          }
+          return 0;
+        });
+        break;
+
+      case "reviewsDes":
+        tempModelsList.sort((a, b) => {
+          return b.reviews.length - a.reviews.length;
+        });
+        break;
+
+      case "reviewsAsc":
+        tempModelsList.sort((a, b) => {
+          return a.reviews.length - b.reviews.length;
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    setModels([...tempModelsList]);
+
     return;
   };
 
@@ -116,13 +170,10 @@ function BikeMake() {
         name="sortBy"
         className="sortList"
         onChange={(event) => setSort(event.target.value)}
-        value="sort"
       >
         <option value="">Sort by</option>
         <option value="nameDes">Name ▼</option>
         <option value="nameAsc">Name ▲</option>
-        <option value="modelsDes">Models ▼</option>
-        <option value="modelsAsc">Models ▲</option>
         <option value="reviewsDes">All Reviews ▼</option>
         <option value="reviewsAsc">All Reviews ▲</option>
       </select>

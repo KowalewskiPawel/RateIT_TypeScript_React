@@ -66,6 +66,63 @@ function CarReviews() {
   };
 
   const setSort = (value: string) => {
+    if (!value) {
+      return;
+    }
+
+    const tempReviewsList = [...reviews];
+
+    switch (value) {
+      case "versionDes":
+        tempReviewsList.sort((a, b) => {
+          let versionA = a.Version.toUpperCase();
+          let versionB = b.Version.toUpperCase();
+
+          if (versionA < versionB) {
+            return -1;
+          }
+
+          if (versionA > versionB) {
+            return 1;
+          }
+          return 0;
+        });
+        break;
+
+      case "versionAsc":
+        tempReviewsList.sort((a, b) => {
+          let versionA = a.Version.toUpperCase();
+          let versionB = b.Version.toUpperCase();
+
+          if (versionA > versionB) {
+            return -1;
+          }
+
+          if (versionA < versionB) {
+            return 1;
+          }
+          return 0;
+        });
+        break;
+
+      case "dateDes":
+        tempReviewsList.sort((a, b) => {
+          return new Date(a.Date).valueOf() - new Date(b.Date).valueOf();
+        });
+        break;
+
+      case "dateAsc":
+        tempReviewsList.sort((a, b) => {
+          return new Date(b.Date).valueOf() - new Date(a.Date).valueOf();
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    setReviews([...tempReviewsList]);
+
     return;
   };
 
@@ -115,15 +172,12 @@ function CarReviews() {
         name="sortBy"
         className="sortList"
         onChange={(event) => setSort(event.target.value)}
-        value="sort"
       >
         <option value="">Sort by</option>
-        <option value="nameDes">Name ▼</option>
-        <option value="nameAsc">Name ▲</option>
-        <option value="modelsDes">Models ▼</option>
-        <option value="modelsAsc">Models ▲</option>
-        <option value="reviewsDes">All Reviews ▼</option>
-        <option value="reviewsAsc">All Reviews ▲</option>
+        <option value="versionDes">Version ▼</option>
+        <option value="versionAsc">Version ▲</option>
+        <option value="dateDes">Date ▼</option>
+        <option value="dateAsc">Date ▲</option>
       </select>
       <Link className="goBack" to={`/cars/${make}/all`}>
         ←

@@ -5,6 +5,7 @@ import { createBrowserHistory } from "history";
 
 import carsService from "../services/cars.service";
 
+import loading from "../assets/loading.gif";
 import car from "../assets/car.png";
 
 import "../styles/CarReview.scss";
@@ -42,16 +43,24 @@ function CarReview() {
   const { model } = useParams<Params>();
   const { id } = useParams<Params>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const history = createBrowserHistory();
 
   const deleteReview = () => {
+    setIsLoading(true);
+
     carsService
       .deleteReview(make, model, id)
       .then((response) => {
+        setIsLoading(false);
         history.push(`/cars/${make}/${model}`);
         return window.location.reload();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setIsLoading(false);
+        return console.error(err);
+      });
   };
 
   const editReview = () => {
@@ -65,6 +74,8 @@ function CarReview() {
     if (!version || !year || !engine || !general || !pros || !cons) {
       return;
     }
+
+    setIsLoading(true);
 
     return carsService
       .editReview(
@@ -80,9 +91,13 @@ function CarReview() {
         id
       )
       .then((response) => {
+        setIsLoading(false);
         return window.location.reload();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setIsLoading(false);
+        return console.error(err);
+      });
   };
 
   useEffect(() => {
@@ -105,97 +120,106 @@ function CarReview() {
 
   return (
     <div className="review-container">
-      <img src={car} alt="small logo" />
-      <h1>
-        {make} {model}
-      </h1>
-      <Link className="goBack" to={`/cars/${make}/${model}`}>
-        ←
-      </Link>
-      <div className="review">
-        {reviewsList.map((item, index) => {
-          const tempDate = new Intl.DateTimeFormat("en-GB").format(
-            new Date(item.Date)
-          );
-          const date = tempDate.split("/").join("-");
-          return (
-            <div key={index}>
-              <div>
-                {item.User === username ? (
-                  <>
-                    <button
-                      onClick={() => deleteReview()}
-                      className="delete-review-btn"
-                    >
-                      DELETE REVIEW
-                    </button>
-                    <button
-                      onClick={() => setEdit((prevState) => !prevState)}
-                      className="edit-review-btn"
-                    >
-                      {!edit ? "EDIT REVIEW" : "CANCEL EDIT"}
-                    </button>
-                    {edit ? (
-                      <button
-                        onClick={() => editReview()}
-                        className="submit-review-btn"
-                      >
-                        SUBMIT
-                      </button>
+      {isLoading ? (
+        <>
+          <h1>Loading</h1>
+          <img className="loading" src={loading} alt="loading" />
+        </>
+      ) : (
+        <>
+          <img src={car} alt="small logo" />
+          <h1>
+            {make} {model}
+          </h1>
+          <Link className="goBack" to={`/cars/${make}/${model}`}>
+            ←
+          </Link>
+          <div className="review">
+            {reviewsList.map((item, index) => {
+              const tempDate = new Intl.DateTimeFormat("en-GB").format(
+                new Date(item.Date)
+              );
+              const date = tempDate.split("/").join("-");
+              return (
+                <div key={index}>
+                  <div>
+                    {item.User === username ? (
+                      <>
+                        <button
+                          onClick={() => deleteReview()}
+                          className="delete-review-btn"
+                        >
+                          DELETE REVIEW
+                        </button>
+                        <button
+                          onClick={() => setEdit((prevState) => !prevState)}
+                          className="edit-review-btn"
+                        >
+                          {!edit ? "EDIT REVIEW" : "CANCEL EDIT"}
+                        </button>
+                        {edit ? (
+                          <button
+                            onClick={() => editReview()}
+                            className="submit-review-btn"
+                          >
+                            SUBMIT
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </>
                     ) : (
                       ""
                     )}
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
-              <p>
-                <u>Version:</u>{" "}
-                <p ref={versionRef} contentEditable={edit}>
-                  {item.Version}
-                </p>
-              </p>
-              <p>
-                <u>Year:</u>{" "}
-                <p ref={yearRef} contentEditable={edit}>
-                  {item.Year}
-                </p>
-              </p>
-              <p>
-                <u>Engine:</u>{" "}
-                <p ref={engineRef} contentEditable={edit}>
-                  {item.Engine}
-                </p>
-              </p>
-              <p>
-                <u>General:</u>{" "}
-                <p ref={generalRef} contentEditable={edit}>
-                  {item.General}
-                </p>
-              </p>
-              <p>
-                <u>Pros:</u>{" "}
-                <p ref={prosRef} contentEditable={edit}>
-                  {item.Pros}
-                </p>
-              </p>
-              <p>
-                <u>Cons:</u>{" "}
-                <p ref={consRef} contentEditable={edit}>
-                  {item.Cons}
-                </p>
-              </p>
-              <p>
-                <u>Date:</u> {date}
-              </p>
-              <p>
-                <u>User:</u> {item.User}
-              </p>
-            </div>
-          );
-        })}
-      </div>
+                  </div>
+                  <p>
+                    <u>Version:</u>{" "}
+                    <p ref={versionRef} contentEditable={edit}>
+                      {item.Version}
+                    </p>
+                  </p>
+                  <p>
+                    <u>Year:</u>{" "}
+                    <p ref={yearRef} contentEditable={edit}>
+                      {item.Year}
+                    </p>
+                  </p>
+                  <p>
+                    <u>Engine:</u>{" "}
+                    <p ref={engineRef} contentEditable={edit}>
+                      {item.Engine}
+                    </p>
+                  </p>
+                  <p>
+                    <u>General:</u>{" "}
+                    <p ref={generalRef} contentEditable={edit}>
+                      {item.General}
+                    </p>
+                  </p>
+                  <p>
+                    <u>Pros:</u>{" "}
+                    <p ref={prosRef} contentEditable={edit}>
+                      {item.Pros}
+                    </p>
+                  </p>
+                  <p>
+                    <u>Cons:</u>{" "}
+                    <p ref={consRef} contentEditable={edit}>
+                      {item.Cons}
+                    </p>
+                  </p>
+                  <p>
+                    <u>Date:</u> {date}
+                  </p>
+                  <p>
+                    <u>User:</u> {item.User}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

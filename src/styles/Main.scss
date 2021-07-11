@@ -151,3 +151,50 @@
 .bike-make-bar:active {
   transform: scale(0.98);
 }
+
+@media only screen and (min-width: 1000px) {
+  .main-container {
+    width: 50vw;
+  }
+
+  .logo-small {
+    margin: -4rem 30rem auto -4rem;
+  }
+
+  #small-title {
+    margin: -9rem 18rem auto auto;
+  }
+
+  #logout-button {
+    top: -6vh;
+    left: 20vw;
+    margin: auto;
+  }
+
+  #username {
+    margin: auto;
+  }
+
+  .vehicles-selection {
+    margin: auto 20rem auto auto;
+  }
+
+  .search-bar {
+    width: 24vw;
+  }
+
+  .sortList {
+    margin: 2vw -27vw auto auto;
+  }
+
+  .makes-list {
+    max-height: 60vh;
+    height: 60vh;
+    margin-top: 4rem;
+  }
+
+  .car-make-bar,
+  .bike-make-bar {
+    width: 40vw;
+  }
+}

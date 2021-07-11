@@ -88,6 +88,140 @@ function Main() {
   };
 
   const setSort = (value: string) => {
+    if (!value) {
+      return;
+    }
+
+    const tempCarsList = [...cars];
+    const tempBikesList = [...bikes];
+
+    switch (value) {
+      case "nameDes":
+        tempCarsList.sort((a, b) => {
+          let nameA = a.make.toUpperCase();
+          let nameB = b.make.toUpperCase();
+
+          if (nameA < nameB) {
+            return -1;
+          }
+
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
+        tempBikesList.sort((a, b) => {
+          let nameA = a.make.toUpperCase();
+          let nameB = b.make.toUpperCase();
+
+          if (nameA < nameB) {
+            return -1;
+          }
+
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
+        break;
+      case "nameAsc":
+        tempCarsList.sort((a, b) => {
+          let nameA = a.make.toUpperCase();
+          let nameB = b.make.toUpperCase();
+          if (nameA < nameB) {
+            return 1;
+          }
+          if (nameA > nameB) {
+            return -1;
+          }
+          return 0;
+        });
+        tempBikesList.sort((a, b) => {
+          let nameA = a.make.toUpperCase();
+          let nameB = b.make.toUpperCase();
+          if (nameA < nameB) {
+            return 1;
+          }
+          if (nameA > nameB) {
+            return -1;
+          }
+          return 0;
+        });
+        break;
+      case "modelsDes":
+        tempCarsList.sort((a, b) => {
+          return b.models.length - a.models.length;
+        });
+        tempBikesList.sort((a, b) => {
+          return b.models.length - a.models.length;
+        });
+        break;
+
+      case "modelsAsc":
+        tempCarsList.sort((a, b) => {
+          return a.models.length - b.models.length;
+        });
+        tempBikesList.sort((a, b) => {
+          return a.models.length - b.models.length;
+        });
+        break;
+
+      case "reviewsDes":
+        tempCarsList.sort((a, b) => {
+          let aReviewsLength = 0;
+          let bReviewsLength = 0;
+          a.models.forEach((model) => {
+            aReviewsLength += model.reviews.length;
+          });
+          b.models.forEach((model) => {
+            bReviewsLength += model.reviews.length;
+          });
+          return bReviewsLength - aReviewsLength;
+        });
+        tempBikesList.sort((a, b) => {
+          let aReviewsLength = 0;
+          let bReviewsLength = 0;
+          a.models.forEach((model) => {
+            aReviewsLength += model.reviews.length;
+          });
+          b.models.forEach((model) => {
+            bReviewsLength += model.reviews.length;
+          });
+          return bReviewsLength - aReviewsLength;
+        });
+        break;
+
+      case "reviewsAsc":
+        tempCarsList.sort((a, b) => {
+          let aReviewsLength = 0;
+          let bReviewsLength = 0;
+          a.models.forEach((model) => {
+            aReviewsLength += model.reviews.length;
+          });
+          b.models.forEach((model) => {
+            bReviewsLength += model.reviews.length;
+          });
+          return aReviewsLength - bReviewsLength;
+        });
+        tempBikesList.sort((a, b) => {
+          let aReviewsLength = 0;
+          let bReviewsLength = 0;
+          a.models.forEach((model) => {
+            aReviewsLength += model.reviews.length;
+          });
+          b.models.forEach((model) => {
+            bReviewsLength += model.reviews.length;
+          });
+          return aReviewsLength - bReviewsLength;
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    setCars([...tempCarsList]);
+    setBikes([...tempBikesList]);
     return;
   };
 
@@ -201,11 +335,10 @@ function Main() {
         name="sortBy"
         className="sortList"
         onChange={(event) => setSort(event.target.value)}
-        value="sort"
       >
         <option value="">Sort by</option>
-        <option value="nameDes">Name ▼</option>
-        <option value="nameAsc">Name ▲</option>
+        <option value="nameDes">Make ▼</option>
+        <option value="nameAsc">Make ▲</option>
         <option value="modelsDes">Models ▼</option>
         <option value="modelsAsc">Models ▲</option>
         <option value="reviewsDes">All Reviews ▼</option>
