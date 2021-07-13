@@ -7,7 +7,7 @@ RateIT is an interactive platform for sharing reviews about cars and motorbikes.
 ### Installation
 
 1. After cloning the repository install dependencies with the command `npm install` / `yarn install`
-2. Create `.env` file in the main directory
+2. Create the `.env` file in the main directory
 3. Inside of the `.env` file add addresses to the API `REACT_APP_API_URL_AUTH`
 
 ## Figma Layout
