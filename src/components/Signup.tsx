@@ -22,11 +22,16 @@ function Signup() {
     event.preventDefault();
 
     setIsLoading(true);
-
+    
     if (password !== confirmPassword) {
       setIsLoading(false);
       setMessage("Passwords don't match.");
       return;
+    }
+    
+    if (username.length < 4) {
+    setIsLoading(false);
+    return setMessage("Username has to be at least 4 characters long.");
     }
 
     AuthService.signup(username, mail, password, confirmPassword).then(
