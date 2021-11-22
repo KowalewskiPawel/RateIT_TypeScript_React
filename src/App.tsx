@@ -28,7 +28,6 @@ function App() {
     const token = AuthService.getCurrentUser();
     if (token) {
       setUser(true);
-      return;
     }
   }, [user]);
 
@@ -39,19 +38,19 @@ function App() {
           <Route exact path={["/", "/login"]}>
             <Login />
           </Route>
-          <Route exact path="/signup">
+          <Route exact path='/signup'>
             <Signup />
           </Route>
-          <Route exact path="/activate">
+          <Route exact path='/activate'>
             <Activate />
           </Route>
-          <Route exact path="/forgot">
+          <Route exact path='/forgot'>
             <ForgotPassword />
           </Route>
-          <Route exact path="/reset">
+          <Route exact path='/reset'>
             <ResetPassword />
           </Route>
-          <Route path="/">
+          <Route path='/'>
             <NotFound />
           </Route>
         </Switch>
@@ -60,31 +59,31 @@ function App() {
           <Route exact path={["/", "/main"]}>
             <Main />
           </Route>
-          <Route exact path="/cars/:make/all">
+          <Route exact path='/cars/:make/all'>
             <CarMake />
           </Route>
-          <Route exact path="/cars/:make/:model">
+          <Route exact path='/cars/:make/:model'>
             <CarReviews />
           </Route>
-          <Route exact path="/cars/:make/:model/addreview">
+          <Route exact path='/cars/:make/:model/addreview'>
             <AddCarReview />
           </Route>
-          <Route exact path="/cars/:make/:model/:id">
+          <Route exact path='/cars/:make/:model/:id'>
             <CarReview />
           </Route>
-          <Route exact path="/bikes/:make/all">
+          <Route exact path='/bikes/:make/all'>
             <BikeMake />
           </Route>
-          <Route exact path="/bikes/:make/:model">
+          <Route exact path='/bikes/:make/:model'>
             <BikeReviews />
           </Route>
-          <Route exact path="/bikes/:make/:model/addreview">
+          <Route exact path='/bikes/:make/:model/addreview'>
             <AddBikeReview />
           </Route>
-          <Route exact path="/bikes/:make/:model/:id">
+          <Route exact path='/bikes/:make/:model/:id'>
             <BikeReview />
           </Route>
-          <Route path="/">
+          <Route path='/'>
             <NotFound />
           </Route>
         </Switch>

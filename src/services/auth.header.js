@@ -3,7 +3,6 @@ export default function authHeader() {
 
   if (user) {
     return { Authorization: `Bearer ${user}` };
-  } else {
-    return {};
   }
+  return {};
 }
